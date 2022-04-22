@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.0.2' 
+VERSION = '0.0.4' 
 DESCRIPTION = 'Improved method for reading the first/last/specific line from csv into a DataFrame'
 LONG_DESCRIPTION = """Improved method for reading the first/last/specific line from csv into a DataFrame
 
@@ -27,7 +27,6 @@ setup(
         install_requires=["pandas"],
         url="https://github.com/donjor/read-csv-turbo",
 
-        
         keywords=['python', 'pandas', 'readcsv', 'readfirstlinecsv', 'readlastlinecsv', 'readspecificlinecsv'],
         classifiers= [
             "Development Status :: 3 - Alpha",
