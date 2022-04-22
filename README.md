@@ -37,7 +37,7 @@ TURBO TIME:      0.25s (21.8x faster)
 ## Speed Test
 Test completed with a csv file 609MB with 5,000,000 lines. Downloaded from https://eforexcel.com/wp/downloads-18-sample-csv-files-data-sets-for-testing-sales/ 
 
-The `tests.py` script was run to produce this.
+The `speedtest.py` script was run to produce this.
 The test is reading the first and last lines of a csv file including the header.
 
 ```

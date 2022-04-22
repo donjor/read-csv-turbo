@@ -1,72 +1,77 @@
+from tokenize import String
 import pandas as pd
 import subprocess
+from io import StringIO
 
 def csv_head(path, header):
     if header:
         csv_head = subprocess.check_output(f"sed -n '2p' {path}", shell=True).decode("utf-8").strip()
-        csv_head_list = csv_head.split(",")
-        return csv_head_list
+        return csv_head
     else:
         csv_head = subprocess.check_output(f"head -1 {path}", shell=True).decode("utf-8").strip()
-        csv_head_list = csv_head.split(",")
-        return csv_head_list
+        return csv_head
 
 def csv_tail(path):
     csv_tail = subprocess.check_output(f"tail -1 {path}", shell=True).decode("utf-8").strip()
-    csv_tail_list = csv_tail.split(",")
-    return csv_tail_list
+    return csv_tail
 
 def csv_line(path, n):
     csv_line = subprocess.check_output(f"sed -n '{n}p' {path}", shell=True).decode("utf-8").strip()
-    csv_line_list = csv_line.split(",")
-    return csv_line_list
+    return csv_line
 
 def read_csv_header(path):
     csv_header_str = subprocess.check_output(f"head -1 {path}", shell=True).decode("utf-8").strip()
-    csv_header = csv_header_str.split(",")
-    return csv_header
+    return csv_header_str
 
 def read_csv_head(path, header=True):
     head = csv_head(path,header)
 
     if header:
         csv_header = read_csv_header(path)
-        df = pd.DataFrame([head], columns=csv_header)
+        string_data = StringIO(f'{csv_header}\n{head}')
+        df = pd.read_csv(string_data, sep=",")
         return df
     else:
-        df = pd.DataFrame([head])
+        string_data = StringIO(f'{head}')
+        df = pd.read_csv(string_data, sep=",", header=None)
         return df
+
 
 def read_csv_tail(path, header=True):
     tail = csv_tail(path)
 
     if header:
         csv_header = read_csv_header(path)
-        df = pd.DataFrame([tail], columns=csv_header)
+        string_data = StringIO(f'{csv_header}\n{tail}')
+        df = pd.read_csv(string_data, sep=",")
         return df
     else:
-        df = pd.DataFrame([tail])
+        string_data = StringIO(f'{tail}')
+        df = pd.read_csv(string_data, sep=",", header=None)
         return df
 
 def read_csv_headtail(path, header=True):
-    #tail
     head = csv_head(path,header)
     tail = csv_tail(path)
 
     if header:
         csv_header = read_csv_header(path)
-        df = pd.DataFrame([head,tail], columns=csv_header)
+        string_data = StringIO(f'{csv_header}\n{head}\n{tail}')
+        df = pd.read_csv(string_data, sep=",")
         return df
     else:
-        df = pd.DataFrame([head,tail])
+        string_data = StringIO(f'{head}\n{tail}')
+        df = pd.read_csv(string_data, sep=",", header=None)
         return df
 
 def read_csv_line(path, n, header=True):
     line = csv_line(path, n)
     if header:
         csv_header = read_csv_header(path)
-        df = pd.DataFrame([line], columns=csv_header)
+        string_data = StringIO(f'{csv_header}\n{line}')
+        df = pd.read_csv(string_data, sep=",")
         return df
     else:
-        df = pd.DataFrame([line])
-        return df 
+        string_data = StringIO(f'{line}')
+        df = pd.read_csv(string_data, sep=",", header=None)
+        return df
