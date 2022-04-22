@@ -3,26 +3,26 @@ import subprocess
 
 def csv_head(path, header):
     if header:
-        csv_head = subprocess.check_output(f"sed -n '2p' {path}", shell=True).decode("utf-8").replace("\n","")
+        csv_head = subprocess.check_output(f"sed -n '2p' {path}", shell=True).decode("utf-8").strip()
         csv_head_list = csv_head.split(",")
         return csv_head_list
     else:
-        csv_head = subprocess.check_output(f"head -1 {path}", shell=True).decode("utf-8").replace("\n","")
+        csv_head = subprocess.check_output(f"head -1 {path}", shell=True).decode("utf-8").strip()
         csv_head_list = csv_head.split(",")
         return csv_head_list
 
 def csv_tail(path):
-    csv_tail = subprocess.check_output(f"tail -1 {path}", shell=True).decode("utf-8").replace("\n","")
+    csv_tail = subprocess.check_output(f"tail -1 {path}", shell=True).decode("utf-8").strip()
     csv_tail_list = csv_tail.split(",")
     return csv_tail_list
 
 def csv_line(path, n):
-    csv_line = subprocess.check_output(f"sed -n '{n}p' {path}", shell=True).decode("utf-8").replace("\n","")
+    csv_line = subprocess.check_output(f"sed -n '{n}p' {path}", shell=True).decode("utf-8").strip()
     csv_line_list = csv_line.split(",")
     return csv_line_list
 
 def read_csv_header(path):
-    csv_header_str = subprocess.check_output(f"head -1 {path}", shell=True).decode("utf-8").replace("\n","")
+    csv_header_str = subprocess.check_output(f"head -1 {path}", shell=True).decode("utf-8").strip()
     csv_header = csv_header_str.split(",")
     return csv_header
 
