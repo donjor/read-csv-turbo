@@ -7,6 +7,9 @@ Reading a large csv once is "fine" but often I find myself looping through many 
 
 At the moment the use case of this is quite limited as it just provides a fast way to read the `first`, `last` or `n` row of a csv into a dataframe
 
+## Installation
+`pip install readcsvturbo`
+
 ## Usage
 ```
 import pandas as pd
@@ -30,8 +33,6 @@ RAW PANDAS TIME: 1.15s
 SKIPROWS TIME:   0.44s (2.6x faster)
 TURBO TIME:      0.06s (19x faster)
 ```
-
-
 
 ## Speed Test
 Test completed with a csv file 128mb. The `tests.py` script was run to produce this.
