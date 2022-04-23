@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.0.5' 
+VERSION = '0.0.6' 
 DESCRIPTION = 'Improved method for reading the first/last/specific line from csv into a DataFrame'
 LONG_DESCRIPTION = """Improved method for reading the first/last/specific line from csv into a DataFrame
 
@@ -33,5 +33,6 @@ setup(
             "Programming Language :: Python :: 3",
             "Operating System :: MacOS :: MacOS X",
             "Operating System :: POSIX :: Linux",
+            "Operating System :: Microsoft :: Windows",
         ]
 )
