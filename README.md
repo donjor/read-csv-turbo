@@ -1,11 +1,27 @@
 # read-csv-turbo
 Ever deal with multiple huge csv files and and the panads `read_csv/skiprows` method is slowing you down? You are not alone.
 
-read-csv-turbo is an improved method of reading the first and last lines using unix `head` and `tail` commands to get the data you want in a dataframe as fast as possible. I may include Windows support in the future if requested.
+read-csv-turbo is an improved method of reading the first and last lines using unix style `head` and `tail` commands to get the data you want in a dataframe as fast as possible.
+Windows and UNIX support
 
-Reading a large csv once is "fine" but often I find myself looping through many files and this process is painfully slow which is why StackOverflow suggestions didn't cut it. There may be a newer/smarter way of approaching this but this method should be as fast as you could get. 
+Reading a large csv once is "fine" but often I find myself looping through many files and this process is painfully slow which is why StackOverflow suggestions didn't cut it. There may be a newer/smarter way of approaching this but this method should be as fast as you could get.
 
 At the moment the use case of this is quite limited as it just provides a fast way to read the `first`, `last` or `n` row of a csv into a dataframe
+
+## Approach
+Uses the standard subprocess python module
+
+Unix : `subprocess.check_output(f"head -1 {path}", shell=True).decode("utf-8").strip()`
+Windows: `subprocess.check_output(f"powershell gc {path} -head 1", shell=True).decode("utf-8").strip()`
+
+Then reading in the string output using `StringIO`
+
+```
+string_data = StringIO(f'{csv_header}\n{head}')
+df = pd.read_csv(string_data, sep=",")
+```
+
+This then maintains the expected smart object types; meaning that the column types aren't just plain strings.
 
 ## Installation
 `pip install readcsvturbo`
@@ -76,5 +92,5 @@ SKIPROWS TIME: 3.04s
 
 [2 rows x 14 columns]
 TURBO TIME: 0.25s
-
 ```
+
