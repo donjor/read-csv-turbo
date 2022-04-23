@@ -1,27 +1,48 @@
-from tokenize import String
 import pandas as pd
 import subprocess
+import platform
 from io import StringIO
 
 def csv_head(path, header):
+    s = ""
     if header:
-        csv_head = subprocess.check_output(f"sed -n '2p' {path}", shell=True).decode("utf-8").strip()
-        return csv_head
+        if platform.system() == "Windows":
+            s = f'powershell "gc {path} | Select -Index 1"'
+        else:
+            s = f"sed -n '2p' {path}"
     else:
-        csv_head = subprocess.check_output(f"head -1 {path}", shell=True).decode("utf-8").strip()
-        return csv_head
+        if platform.system() == "Windows":
+            s = f"powershell gc {path} -head 1"
+        else:
+            s = f"head -1 {path}"
+    
+    return subprocess.check_output(s, shell=True).decode("utf-8").strip()    
 
 def csv_tail(path):
-    csv_tail = subprocess.check_output(f"tail -1 {path}", shell=True).decode("utf-8").strip()
-    return csv_tail
+    s = ""
+    if platform.system() == "Windows":
+        s = f"powershell gc {path} -tail 1"
+    else:
+        s = f"tail -1 {path}"
+
+    return subprocess.check_output(s, shell=True).decode("utf-8").strip()  
 
 def csv_line(path, n):
-    csv_line = subprocess.check_output(f"sed -n '{n}p' {path}", shell=True).decode("utf-8").strip()
-    return csv_line
+    s = ""
+    if platform.system() == "Windows":
+        s = f'powershell "gc {path} | Select -Index {n}"'
+    else:
+        s = f"sed -n '{n}p' {path}"
+
+    return subprocess.check_output(s, shell=True).decode("utf-8").strip()
 
 def read_csv_header(path):
-    csv_header_str = subprocess.check_output(f"head -1 {path}", shell=True).decode("utf-8").strip()
-    return csv_header_str
+    s = ""
+    if platform.system() == "Windows":
+        s = f"powershell gc {path} -head 1"
+    else:
+        s = f"head -1 {path}"
+    return subprocess.check_output(s, shell=True).decode("utf-8").strip()
 
 def read_csv_head(path, header=True):
     head = csv_head(path,header)
