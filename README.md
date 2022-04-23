@@ -12,6 +12,7 @@ At the moment the use case of this is quite limited as it just provides a fast w
 Uses the standard subprocess python module
 
 Unix : `subprocess.check_output(f"head -1 {path}", shell=True).decode("utf-8").strip()`
+
 Windows: `subprocess.check_output(f"powershell gc {path} -head 1", shell=True).decode("utf-8").strip()`
 
 Then reading in the string output using `StringIO`
